@@ -1,0 +1,591 @@
+/* 导入 MiSans 字体 */
+@font-face {
+  font-family: 'MiSans';
+  src: url('/fonts/MiSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MiSans';
+  src: url('/fonts/MiSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MiSans';
+  src: url('/fonts/MiSans-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 全局链接样式 */
+@layer base {
+  a {
+    text-decoration: none !important;
+  }
+  a:hover {
+    text-decoration: none !important;
+  }
+}
+
+/* 设置全局字体 */
+@layer base {
+  html {
+    font-family: 'MiSans', system-ui, sans-serif;
+  }
+
+  /* 确保所有文本元素使用 MiSans */
+  h1, h2, h3, h4, h5, h6, p, span, div, li, a {
+    font-family: 'MiSans', system-ui, sans-serif;
+  }
+
+  /* 代码块使用等宽字体 */
+  code, pre {
+    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Monaco, Consolas, monospace;
+  }
+}
+
+:root {
+  --silver-400: 203, 213, 225;
+  --silver-600: 148, 163, 184;
+  --silver-700: 100, 116, 139;
+}
+
+@layer components {
+  .silver-gradient-text {
+    @apply bg-clip-text text-transparent bg-[length:200%_auto] animate-silver-shine;
+    background-image: linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #d4d4d4 25%,
+      #f0f0f0 50%,
+      #d4d4d4 75%,
+      #ffffff 100%
+    );
+  }
+}
+
+/* 调整动画速度和渐变效果 */
+@keyframes silverShine {
+  0%, 100% {
+    background-position: 0% 50%;
+    opacity: 0.95;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
+}
+
+.animate-silver-shine {
+  animation: silverShine 4s ease-in-out infinite;
+}
+
+/* 调整 prose 样式 */
+.prose {
+  @apply max-w-4xl;
+}
+
+.prose :where(h1, h2, h3, h4, h5, h6) {
+  @apply silver-gradient-text font-bold;
+  font-size: 120%;
+  letter-spacing: 0.05em;
+}
+
+.prose :where(p, li, blockquote) {
+  @apply silver-gradient-text;
+  font-size: 110%;
+  line-height: 1.8;
+}
+
+/* 代码块不应用渐变效果 */
+.prose pre * {
+  @apply bg-none text-inherit animate-none;
+}
+
+/* 表格样式 */
+.prose table {
+  @apply w-full border-collapse my-4;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.prose table th {
+  @apply p-3 text-left font-bold;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.prose table td {
+  @apply p-3;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.prose table tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transition: background-color 0.2s ease;
+}
+
+/* 表格容器样式 */
+.prose .table-container {
+  @apply overflow-x-auto my-8 rounded-xl;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    inset 0 0 0.5px rgba(255, 255, 255, 0.2),
+    0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 引用样式 */
+.prose blockquote {
+  @apply border-l-4 border-gray-700/50 pl-4 italic;
+  background: linear-gradient(to right, rgba(255,255,255,0.05), transparent);
+}
+
+/* 图片样式 */
+.prose img {
+  @apply rounded-lg shadow-lg max-w-full h-auto;
+  filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
+}
+
+/* 链接样式 */
+.prose a {
+  @apply relative inline-block silver-gradient-text;
+  position: relative;
+}
+
+.prose a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    transparent 100%
+  );
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.prose a:hover::after {
+  transform: scaleX(1);
+}
+
+/* 标题特效 */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  @apply relative;
+  scroll-margin-top: 2rem;
+  margin-top: 2.5em;
+  margin-bottom: 1em;
+}
+
+/* 第一个标题不需要顶部间距 */
+.prose > div > h1:first-child,
+.prose > div > h2:first-child,
+.prose > div > h3:first-child,
+.prose > div > h4:first-child,
+.prose > div > h5:first-child,
+.prose > div > h6:first-child {
+  margin-top: 0;
+}
+
+/* 标题后的段落增加间距 */
+.prose h1 + p,
+.prose h2 + p,
+.prose h3 + p,
+.prose h4 + p,
+.prose h5 + p,
+.prose h6 + p {
+  margin-top: 1em;
+  margin-bottom: 1.5em;
+}
+
+/* 标题链接样式 - 移除下划线 */
+.prose h1 a,
+.prose h2 a,
+.prose h3 a,
+.prose h4 a,
+.prose h5 a,
+.prose h6 a {
+  @apply relative;
+  transition: all 0.3s ease;
+}
+
+.prose h1 a::after,
+.prose h2 a::after,
+.prose h3 a::after,
+.prose h4 a::after,
+.prose h5 a::after,
+.prose h6 a::after {
+  display: none;
+}
+
+.prose h1 a:hover,
+.prose h2 a:hover,
+.prose h3 a:hover,
+.prose h4 a:hover,
+.prose h5 a:hover,
+.prose h6 a:hover {
+  transform: translateX(16px);
+}
+
+.prose h1 a:hover::before,
+.prose h2 a:hover::before,
+.prose h3 a:hover::before,
+.prose h4 a:hover::before,
+.prose h5 a:hover::before,
+.prose h6 a:hover::before {
+  content: '#';
+  position: absolute;
+  left: -1em;
+  color: rgba(255, 255, 255, 0.3);
+  padding-right: 8px;
+  animation: fadeInLeft 0.3s ease forwards;
+}
+
+/* 点击时的效果 */
+.prose h1 a:active,
+.prose h2 a:active,
+.prose h3 a:active,
+.prose h4 a:active,
+.prose h5 a:active,
+.prose h6 a:active {
+  transform: translateX(16px) scale(0.98);
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.prose h1 {
+  @apply text-4xl mb-8;
+  text-shadow: 0 0 15px rgba(255,255,255,0.3);
+}
+
+.prose h2 {
+  @apply text-3xl mb-6;
+  text-shadow: 0 0 12px rgba(255,255,255,0.25);
+}
+
+.prose h3 {
+  @apply text-2xl mb-4;
+  text-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+/* 任务列表样式 */
+.prose input[type="checkbox"] {
+  @apply mr-2;
+}
+
+/* 数学公式样式 */
+.prose .katex {
+  @apply text-white;
+}
+
+/* 脚注样式 */
+.prose .footnotes {
+  @apply mt-8 pt-8 border-t border-gray-700/50;
+}
+
+/* 高亮标记样式 */
+.prose mark {
+  @apply px-2 py-0.5 rounded-md;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    inset 0 0 0.5px rgba(255, 255, 255, 0.2),
+    0 0 4px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.prose mark:hover {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    inset 0 0 1px rgba(255, 255, 255, 0.3),
+    0 0 8px rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+/* 添加景辉光效果 */
+@keyframes glow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.bg-glow {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 41, 59, 1) 0%,
+    rgba(15, 23, 42, 1) 50%,
+    rgba(30, 41, 59, 1) 100%
+  );
+  background-size: 200% 200%;
+  animation: glow 15s ease infinite;
+  position: relative;
+}
+
+.bg-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+.bg-glow::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 25%),
+    radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 25%);
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+/* 简单的深黑色背景 */
+.content-container {
+  @apply min-h-screen relative overflow-hidden;
+  background-color: rgb(10, 10, 12);
+}
+
+.content-wrapper {
+  @apply container mx-auto px-4 py-16 relative z-10;
+}
+
+/* 内容模块样式 */
+.prose > * {
+  @apply mb-8;  /* 增加模块间距 */
+}
+
+.prose > :not(pre) {  /* 排除代码块，因为它有自的样式 */
+  @apply p-6 rounded-xl bg-white/[0.02] backdrop-blur-sm;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* 调整标题样式 */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  @apply mt-0 first:mt-0;  /* 移除顶部边距，避免和padding重叠 */
+}
+
+/* 调整列表样式 */
+.prose ul,
+.prose ol {
+  @apply my-0;  /* 移除列表的外边距，因为容器已经有padding */
+}
+
+/* 调整代码块样式 */
+.prose pre {
+  @apply my-8 rounded-xl;
+  background-color: rgba(0, 0, 0, 0.5) !important;  /* 让代码块背景更深一些 */
+}
+
+/* 调整引用块样式 */
+.prose blockquote {
+  @apply my-0;  /* 移除引用的外边距，因为容器已经有padding */
+  background: linear-gradient(to right, rgba(255,255,255,0.03), transparent);
+}
+
+/* 调整图片容器样式 */
+.prose .image-container {
+  @apply p-1;  /* 减小图片容器的内边距 */
+}
+
+/* 调整段落样式 */
+.prose p {
+  @apply my-0;  /* 移除段落的外边距，因为容器已经有padding */
+}
+
+/* 文章标题模块样式 */
+.article-header {
+  @apply relative p-8 rounded-xl overflow-hidden;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.01)
+  );
+}
+
+/* 动画边框效果 */
+.article-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  ) border-box;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+}
+
+/* 动画边框旋转效果 */
+@keyframes borderRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.article-header:hover::before {
+  animation: borderRotate 4s linear infinite;
+}
+
+/* 标题内容布局 */
+.article-header-content {
+  @apply relative z-10;
+}
+
+/* 文章内容块样式 */
+.content-block {
+  @apply relative p-8 rounded-xl mb-8;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* 发光边框效果 */
+.content-block::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.1)
+  );
+  mask: linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.content-block:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.content-block:hover::before {
+  opacity: 1;
+}
+
+/* 内容定位 */
+.content-block-inner {
+  @apply relative z-10;
+}
+
+/* 内联代码样式 */
+.prose :not(pre) > code {
+  @apply px-2 py-0.5 rounded-md text-sm;
+  font-family: 'MiSans', system-ui, sans-serif;
+  background: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    inset 0 0 0.5px rgba(255, 255, 255, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  font-weight: 500;
+  letter-spacing: -0.2px;
+  transition: all 0.2s ease;
+}
+
+.prose :not(pre) > code:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    inset 0 0 1px rgba(255, 255, 255, 0.3),
+    0 3px 6px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+/* 确保内联代码不继承渐变效果和伪元素 */
+.prose :not(pre) > code,
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after {
+  @apply bg-clip-padding;
+  background-image: none !important;
+  animation: none !important;
+  content: none !important;
+}
+
+/* 移除链接的默认样式 */
+.prose a {
+  text-decoration: none;
+}
+
+.prose a:hover {
+  text-decoration: none;
+}
+
