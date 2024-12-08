@@ -7,45 +7,7 @@ import sup from 'markdown-it-sup';
 import mark from 'markdown-it-mark';
 import footnote from 'markdown-it-footnote';
 import katex from 'markdown-it-katex';
-
-// 添加缺失的类型声明
-declare module 'markdown-it-task-lists' {
-  const plugin: any;
-  export default plugin;
-}
-
-declare module 'markdown-it-sub' {
-  const plugin: any;
-  export default plugin;
-}
-
-declare module 'markdown-it-sup' {
-  const plugin: any;
-  export default plugin;
-}
-
-declare module 'markdown-it-mark' {
-  const plugin: any;
-  export default plugin;
-}
-
-declare module 'markdown-it-footnote' {
-  const plugin: any;
-  export default plugin;
-}
-
-declare module 'markdown-it-katex' {
-  const plugin: any;
-  export default plugin;
-}
-
-interface Token {
-  type: string;
-  tag: string;
-  attrs: [string, string][];
-  content: string;
-  [key: string]: any;
-}
+import type { Token } from 'markdown-it';
 
 interface MarkdownItRenderer {
   renderToken: (tokens: Token[], idx: number, options: any) => string;
@@ -195,7 +157,7 @@ function parseFrontmatter(frontmatterStr: string): PostMetadata {
           value = value
             .slice(1, -1) // 移除 [ ]
             .split(',')
-            .map(item => item.trim().replace(/['"]/g, '')); // ��除引号并清理空格
+            .map(item => item.trim().replace(/['"]/g, '')); // 移除引号并清理空格
         }
       }
       frontmatter[key] = value;

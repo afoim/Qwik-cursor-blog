@@ -1,7 +1,14 @@
 import { component$, useVisibleTask$, useSignal } from '@builder.io/qwik';
-import { routeLoader$, DocumentHead, Link } from '@builder.io/qwik-city';
-import { getPost } from '~/utils/markdown';
+import { routeLoader$, DocumentHead, Link, StaticGenerateHandler } from '@builder.io/qwik-city';
+import { getPost, getPostList } from '~/utils/markdown';
 import { siteConfig } from '~/config/site';
+
+export const onStaticGenerate: StaticGenerateHandler = async () => {
+  const posts = await getPostList();
+  return {
+    params: posts.map(post => ({ slug: post.slug })),
+  };
+};
 
 export const usePost = routeLoader$(async ({ params }) => {
   return await getPost(params.slug);
@@ -163,7 +170,7 @@ export default component$(() => {
                         </div>
                         <p class="text-red-400 text-lg">评论系统加载失败</p>
                         <p class="text-gray-500 text-lg text-center mt-2">
-                          可��是由于网络问题无法连接到 GitHub
+                          可能是由于网络问题无法连接到 GitHub
                           <br />
                           <button 
                             onClick$={() => window.location.reload()}

@@ -16,9 +16,9 @@
     "build.client": "vite build",
     "build.preview": "vite build --ssr src/entry.preview.tsx",
     "build.server": "vite build -c adapters/static/vite.config.ts",
-    "build.static": "vite build --config adapters/static/vite.config.ts",
+    "build.static": "qwik build --static",
     "build.types": "tsc --incremental --noEmit",
-    "deploy": "npm run build.static",
+    "deploy": "qwik build --static",
     "dev": "vite --mode ssr",
     "dev.debug": "node --inspect-brk ./node_modules/vite/bin/vite.js --mode ssr --force",
     "fmt": "prettier --write .",
@@ -48,20 +48,20 @@
     "typescript": "5.4.5",
     "undici": "*",
     "vite": "5.3.5",
-    "vite-tsconfig-paths": "^4.2.1"
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.15",
-    "markdown-it": "^14.1.0",
-    "pinyin": "^4.0.0-alpha.2",
-    "prismjs": "^1.29.0",
-    "vite-plugin-markdown": "^2.2.0",
     "katex": "^0.16.9",
+    "markdown-it": "^14.1.0",
     "markdown-it-footnote": "^4.0.0",
     "markdown-it-katex": "^2.0.3",
     "markdown-it-mark": "^4.0.0",
     "markdown-it-sub": "^2.0.0",
     "markdown-it-sup": "^2.0.0",
-    "markdown-it-task-lists": "^2.1.1"
+    "markdown-it-task-lists": "^2.1.1",
+    "pinyin": "^4.0.0-alpha.2",
+    "prismjs": "^1.29.0",
+    "vite-plugin-markdown": "^2.2.0"
   }
 }
