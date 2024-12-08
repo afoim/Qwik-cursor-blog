@@ -8,6 +8,8 @@ export default {
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in',
         'silver-shine': 'silverShine 8s linear infinite',
+        'fade-out': 'fadeOut 0.5s ease-out forwards',
+        'shine-slow': 'shine 3s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -21,6 +23,14 @@ export default {
           '100%': {
             backgroundPosition: '200% center',
           },
+        },
+        fadeOut: {
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
+        shine: {
+          '0%': { transform: 'translateX(-100%)' },
+          '50%, 100%': { transform: 'translateX(100%)' },
         },
       },
       typography: (theme) => ({

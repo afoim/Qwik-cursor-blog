@@ -115,6 +115,7 @@ export interface PostMetadata {
   date: string;
   tags: string[];
   slug: string;
+  content?: string;
 }
 
 export async function getPostList(): Promise<PostMetadata[]> {
@@ -126,10 +127,11 @@ export async function getPostList(): Promise<PostMetadata[]> {
   
   return Object.entries(posts).map(([path, content]) => {
     const slug = path.split('/').pop()?.replace('.md', '') || '';
-    const { frontmatter } = parseMarkdown(content);
+    const { frontmatter, body } = parseMarkdown(content);
     return {
       ...frontmatter,
       slug,
+      content: body
     };
   }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
@@ -156,41 +158,11 @@ function parseMarkdown(content: string) {
     const [frontmatterStr, ...bodyParts] = content.split('---\n').filter(Boolean);
     const frontmatter = parseFrontmatter(frontmatterStr);
     const body = bodyParts.join('---\n');
-
-    // 用于检查标题重复
-    const usedHeadings = new Set<string>();
-
-    // 修改渲染规则
-    md.renderer.rules.heading_open = function (tokens: Token[], idx: number, options: any, env: any, self: MarkdownItRenderer) {
-      const token = tokens[idx];
-      const nextToken = tokens[idx + 1];
-      const title = nextToken.content;
-      
-      if (usedHeadings.has(title)) {
-        throw new Error(`重复的标题: "${title}"`);
-      }
-      usedHeadings.add(title);
-      
-      if (token.tag === 'h1' || token.tag === 'h2' || token.tag === 'h3' || 
-          token.tag === 'h4' || token.tag === 'h5' || token.tag === 'h6') {
-        return `<${token.tag} id="${encodeURIComponent(title)}"><a href="#${encodeURIComponent(title)}" class="no-underline hover:translate-x-4 transition-transform duration-300 inline-block w-full">`;
-      }
-      return self.renderToken(tokens, idx, options);
-    };
-
-    md.renderer.rules.heading_close = function (tokens: Token[], idx: number, options: any, env: any, self: MarkdownItRenderer) {
-      const token = tokens[idx];
-      if (token.tag === 'h1' || token.tag === 'h2' || token.tag === 'h3' || 
-          token.tag === 'h4' || token.tag === 'h5' || token.tag === 'h6') {
-        return `</a></${token.tag}>`;
-      }
-      return self.renderToken(tokens, idx, options);
-    };
-
     const html = md.render(body);
 
     return {
       frontmatter,
+      body,
       html
     };
   } catch (error) {

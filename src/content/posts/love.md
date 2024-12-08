@@ -2,7 +2,7 @@
 title: Markdown 语法展示
 description: 这篇文章展示了 Markdown 的各种语法效果，包括标题、列表、引用、代码等多种格式。
 date: 2024-03-20
-tags: ["Markdown", "教程", "参考"]
+tags: ["参考"]
 slug: markdown-demo
 ---
 
@@ -76,7 +76,7 @@ function hello() {
 
 ## 图片
 
-![图片描述](https://picsum.photos/800/400)
+![图片描述](/images/home.png)
 
 ## 数学公式
 

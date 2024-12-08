@@ -448,7 +448,7 @@
   @apply my-0;  /* 移除段落的外边距，因为容器已经有padding */
 }
 
-/* 文章标题模块样式 */
+/* 文章��式 */
 .article-header {
   @apply relative p-8 rounded-xl overflow-hidden;
   background: linear-gradient(
@@ -587,5 +587,61 @@
 
 .prose a:hover {
   text-decoration: none;
+}
+
+/* 评论加载动画 */
+@keyframes pulseGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-pulse-gradient {
+  background-size: 200% 200%;
+  animation: pulseGradient 2s ease-in-out infinite;
+}
+
+/* 确保加载动画元素有平滑的过渡 */
+.animate-pulse-gradient > * {
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* 调整评论区容器的过渡效果 */
+#comments {
+  transition: min-height 0.3s ease-in-out;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-fade-out {
+  animation: fadeOut 0.5s ease-out forwards;
+  animation-delay: 0.5s;
+}
+
+/* 上标和下标样式 */
+.prose sub,
+.prose sup {
+  @apply text-xs relative text-white/90;
+}
+
+.prose sub {
+  @apply -bottom-1;
+}
+
+.prose sup {
+  @apply -top-2;
 }
 
