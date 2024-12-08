@@ -64,7 +64,7 @@ function slugify(text: string): string {
 }
 
 // 初始化 markdown-it
-const md = new MarkdownIt({
+const md: MarkdownIt = new MarkdownIt({
   html: true,
   linkify: true,
   typographer: true,

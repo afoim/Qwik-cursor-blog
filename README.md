@@ -18,3 +18,15 @@
 
 ## 预览图
 ![预览图](public/images/home.png)
+
+## Static Site Generator (Node.js)
+
+```shell
+npm run build.server
+```
+
+## Static Site Generator (Node.js)
+
+```shell
+npm run build.server
+```
