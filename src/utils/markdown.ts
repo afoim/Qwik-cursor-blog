@@ -155,7 +155,9 @@ export async function getPost(slug: string) {
 
 function parseMarkdown(content: string) {
   try {
-    const [frontmatterStr, ...bodyParts] = content.split('---\n').filter(Boolean);
+    // 首先标准化换行符
+    const normalizedContent = content.replace(/\r\n/g, '\n');
+    const [frontmatterStr, ...bodyParts] = normalizedContent.split('---\n').filter(Boolean);
     const frontmatter = parseFrontmatter(frontmatterStr);
     const body = bodyParts.join('---\n');
     const html = md.render(body);
@@ -193,7 +195,7 @@ function parseFrontmatter(frontmatterStr: string): PostMetadata {
           value = value
             .slice(1, -1) // 移除 [ ]
             .split(',')
-            .map(item => item.trim().replace(/['"]/g, '')); // 移除引号并清理空格
+            .map(item => item.trim().replace(/['"]/g, '')); // ��除引号并清理空格
         }
       }
       frontmatter[key] = value;
