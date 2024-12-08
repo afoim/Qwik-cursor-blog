@@ -9,4 +9,4 @@
 ---
 
 ## 预览图
-![预览图](public\images\home.png)
+![预览图](public/images/home.png)
