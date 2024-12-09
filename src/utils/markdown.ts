@@ -42,6 +42,9 @@ const md: MarkdownIt = new MarkdownIt({
   }
 });
 
+// 自定义引用块渲染规则
+md.renderer.rules.blockquote_open = () => '<blockquote class="not-italic">\n';
+
 // 修改代码块的渲染规则
 md.renderer.rules.fence = function(tokens, idx) {
   const token = tokens[idx];

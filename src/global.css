@@ -101,10 +101,23 @@
   letter-spacing: 0.05em;
 }
 
-.prose :where(p, li, blockquote) {
+.prose :where(p, li) {
   @apply silver-gradient-text;
   font-size: 110%;
   line-height: 1.8;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-gray-700/50 pl-4 not-italic;
+  background: linear-gradient(to right, rgba(255,255,255,0.05), transparent);
+  font-size: 110%;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.8);
+  font-style: normal !important;
+}
+
+.prose blockquote p {
+  font-style: normal !important;
 }
 
 /* 代码块不应用渐变效果 */
@@ -151,7 +164,7 @@
 
 /* 引用样式 */
 .prose blockquote {
-  @apply border-l-4 border-gray-700/50 pl-4 italic;
+  @apply border-l-4 border-gray-700/50 pl-4;
   background: linear-gradient(to right, rgba(255,255,255,0.05), transparent);
 }
 
@@ -716,7 +729,7 @@
 .prose ol > li,
 .prose ul > li {
   @apply my-2;  /* 添加适当的垂直间距 */
-  padding-left: 0.5em;  /* 微调左侧间距 */
+  padding-left: 0.5em;  /* 微调左侧间�� */
 }
 
 /* 调整文章容器样式 */
