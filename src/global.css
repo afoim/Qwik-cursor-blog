@@ -629,3 +629,20 @@
   @apply -top-2;
 }
 
+/* 有序列表标记样式 */
+.prose ol > li::marker {
+  @apply text-white/80 font-medium;  /* 使用白色并添加适当的透明度 */
+}
+
+/* 无序列表标记样式 */
+.prose ul > li::marker {
+  @apply text-white/80;  /* 同样设置无序列表的标记样式 */
+}
+
+/* 调整列表项的间距和对齐 */
+.prose ol > li,
+.prose ul > li {
+  @apply my-2;  /* 添加适当的垂直间距 */
+  padding-left: 0.5em;  /* 微调左侧间距 */
+}
+
