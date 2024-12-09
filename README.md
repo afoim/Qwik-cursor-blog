@@ -20,9 +20,21 @@
 ![预览图](public/images/home.png)
 
 ## 部署
+- 安装yarn
 ```shell
 npm install -g yarn
+```
+- 安装依赖
+```shell
 yarn install
+```
+- 构建静态网站。输出目录为dist
+```shell
 yarn build.client && yarn build.server
-// 输出目录为dist
+```
+
+## 调试
+- 本地开发
+```shell
+yarn start
 ```
