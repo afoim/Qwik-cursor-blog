@@ -19,14 +19,10 @@
 ## 预览图
 ![预览图](public/images/home.png)
 
-## Static Site Generator (Node.js)
-
+## 部署
 ```shell
-npm run build.server
-```
-
-## Static Site Generator (Node.js)
-
-```shell
-npm run build.server
+npm install -g yarn
+yarn install
+yarn build.client && yarn build.server
+// 输出目录为dist
 ```
