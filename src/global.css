@@ -163,30 +163,14 @@
 
 /* 链接样式 */
 .prose a {
-  @apply relative inline-block silver-gradient-text;
-  position: relative;
+  @apply relative inline-block font-bold;
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.2s ease;
 }
 
-.prose a::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  bottom: -2px;
-  left: 0;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.8) 50%,
-    transparent 100%
-  );
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 0.3s ease;
-}
-
-.prose a:hover::after {
-  transform: scaleX(1);
+.prose a:hover {
+  color: rgba(255, 255, 255, 1);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
 }
 
 /* 标题特效 */
@@ -448,7 +432,7 @@
   @apply my-0;  /* 移除段落的外边距，因为容器已经有padding */
 }
 
-/* 文章式 */
+/* 文章��式 */
 .article-header {
   @apply relative p-8 rounded-xl overflow-hidden;
   background: linear-gradient(
@@ -643,22 +627,5 @@
 
 .prose sup {
   @apply -top-2;
-}
-
-/* 有序列表标记样式 */
-.prose ol > li::marker {
-  @apply text-white/80 font-medium;  /* 使用白色并添加适当的透明度 */
-}
-
-/* 无序列表标记样式 */
-.prose ul > li::marker {
-  @apply text-white/80;  /* 同样设置无序列表的标记样式 */
-}
-
-/* 调整列表项的间距和对齐 */
-.prose ol > li,
-.prose ul > li {
-  @apply my-2;  /* 添加适当的垂直间距 */
-  padding-left: 0.5em;  /* 微调左侧间距 */
 }
 
