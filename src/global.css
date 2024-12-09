@@ -180,10 +180,13 @@
 .prose h4,
 .prose h5,
 .prose h6 {
-  @apply relative;
+  @apply relative break-words overflow-visible;
   scroll-margin-top: 2rem;
   margin-top: 2.5em;
   margin-bottom: 1em;
+  max-width: 100%;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 /* 第一个标题不需要顶部间距 */
@@ -387,6 +390,8 @@
 /* 内容模块样式 */
 .prose > * {
   @apply mb-8;  /* 增加模块间距 */
+  @apply overflow-visible;
+  max-width: 100%;
 }
 
 .prose > :not(pre) {  /* 排除代码块，因为它有自的样式 */
@@ -432,7 +437,7 @@
   @apply my-0;  /* 移除段落的外边距，因为容器已经有padding */
 }
 
-/* 文章��式 */
+/* 文章式 */
 .article-header {
   @apply relative p-8 rounded-xl overflow-hidden;
   background: linear-gradient(
@@ -644,5 +649,32 @@
 .prose ul > li {
   @apply my-2;  /* 添加适当的垂直间距 */
   padding-left: 0.5em;  /* 微调左侧间距 */
+}
+
+/* 调整文章容器样式 */
+.prose > * {
+  @apply overflow-visible;
+  max-width: 100%;
+}
+
+/* 调整标题容器样式 */
+.prose > div {
+  @apply overflow-visible;
+}
+
+/* 移动端特别优化 */
+@media (max-width: 640px) {
+  .prose h1 {
+    @apply text-3xl;
+    word-break: break-word;
+  }
+  
+  .prose h2 {
+    @apply text-2xl;
+  }
+  
+  .prose h3 {
+    @apply text-xl;
+  }
 }
 
