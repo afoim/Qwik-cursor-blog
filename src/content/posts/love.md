@@ -71,7 +71,7 @@ function hello() {
 
 ## 链接
 
-[访问我的博客](https://example.com)  
+[Example](https://example.com)  
 <https://example.com>
 
 ## 图片
