@@ -1,6 +1,6 @@
 import { component$, useVisibleTask$, useSignal } from '@builder.io/qwik';
 import { routeLoader$, DocumentHead, Link, StaticGenerateHandler } from '@builder.io/qwik-city';
-import { getPost, getPostList } from '~/utils/markdown';
+import { getPost, getPostList, addCopyButtons } from '~/utils/markdown';
 import { siteConfig } from '~/config/site';
 
 export const onStaticGenerate: StaticGenerateHandler = async () => {
@@ -21,6 +21,12 @@ export default component$(() => {
   const hasError = useSignal(false);
   const githubConnected = useSignal(false);
 
+  // 初始化代码块复制功能
+  useVisibleTask$(() => {
+    addCopyButtons();
+  });
+
+  // 初始化评论系统
   useVisibleTask$(() => {
     console.log('初始化评论系统...');
     

@@ -8,6 +8,7 @@ import mark from 'markdown-it-mark';
 import footnote from 'markdown-it-footnote';
 import katex from 'markdown-it-katex';
 import type { Token } from 'markdown-it';
+import { CodeBlock } from '~/components/code-block/code-block';
 
 interface MarkdownItRenderer {
   renderToken: (tokens: Token[], idx: number, options: any) => string;
@@ -31,16 +32,46 @@ const md: MarkdownIt = new MarkdownIt({
   linkify: true,
   typographer: true,
   highlight: function (str, lang) {
+    let highlighted = str;
     if (lang && Prism.languages[lang]) {
       try {
-        return `<pre class="language-${lang}"><code>${
-          Prism.highlight(str, Prism.languages[lang], lang)
-        }</code></pre>`;
+        highlighted = Prism.highlight(str, Prism.languages[lang], lang);
       } catch (__) {}
     }
-    return `<pre class="language-text"><code>${md.utils.escapeHtml(str)}</code></pre>`;
+    return `<pre class="language-${lang || 'text'}">${highlighted}</pre>`;
   }
 });
+
+// 修改代码块的渲染规则
+md.renderer.rules.fence = function(tokens, idx) {
+  const token = tokens[idx];
+  const code = token.content;
+  const lang = token.info || '';
+  
+  let highlighted = code;
+  if (lang && Prism.languages[lang]) {
+    try {
+      highlighted = Prism.highlight(code, Prism.languages[lang], lang);
+    } catch (err) {
+      console.error('Failed to highlight:', err);
+    }
+  }
+
+  return `
+    <div class="code-block-wrapper">
+      <pre class="language-${lang || 'text'}"><code>${highlighted}</code></pre>
+      <button class="copy-button" aria-label="Copy code">
+        <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <svg class="success-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </button>
+    </div>
+  `;
+};
 
 // 添加标题锚点功能
 md.renderer.rules.heading_open = function (tokens: Token[], idx: number, options: any, env: any, self: MarkdownItRenderer) {
@@ -165,4 +196,29 @@ function parseFrontmatter(frontmatterStr: string): PostMetadata {
   }
 
   return frontmatter as PostMetadata;
+}
+
+// 添加复制按钮功能
+export function addCopyButtons() {
+  const copyButtons = document.querySelectorAll('.copy-button');
+  
+  copyButtons.forEach(button => {
+    button.addEventListener('click', async () => {
+      const codeElement = button.closest('.code-block-wrapper')?.querySelector('code');
+      if (!codeElement) return;
+      
+      const code = codeElement.textContent || '';
+      
+      try {
+        await navigator.clipboard.writeText(code);
+        button.classList.add('copy-success');
+        
+        setTimeout(() => {
+          button.classList.remove('copy-success');
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
+    });
+  });
 }

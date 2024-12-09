@@ -418,7 +418,75 @@
 /* 调整代码块样式 */
 .prose pre {
   @apply my-8 rounded-xl;
-  background-color: rgba(0, 0, 0, 0.5) !important;  /* 让代码块背景更深一些 */
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* 代码块容器样式 */
+.code-block-wrapper {
+  position: relative;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* 复制按钮样式 */
+.copy-button {
+  position: absolute;
+  right: 0.75rem;
+  top: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.375rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.5);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.copy-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-1px);
+}
+
+.copy-button .copy-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.copy-button .success-icon {
+  display: none;
+  width: 1rem;
+  height: 1rem;
+  color: #22c55e;
+}
+
+.copy-button.copy-success .copy-icon {
+  display: none;
+}
+
+.copy-button.copy-success .success-icon {
+  display: block;
+}
+
+.copy-button.copy-success {
+  background-color: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+
+/* 复制成功动画 */
+@keyframes copySuccess {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.copy-success {
+  animation: copySuccess 0.3s ease-in-out;
 }
 
 /* 调整引用块样式 */
