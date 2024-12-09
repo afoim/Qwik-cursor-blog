@@ -8,7 +8,7 @@ export default component$(() => {
       <div class="max-w-4xl mx-auto flex flex-col items-center gap-4 text-sm text-white/50">
         <div class="flex items-center gap-4">
           <a 
-            href="https://github.com/afoim/Qwik-cursor-blog" 
+            href="https://github.com/afoim" 
             target="_blank" 
             rel="noopener noreferrer"
             class="flex items-center gap-2 hover:text-white/70 transition-colors duration-300 group"
@@ -35,7 +35,7 @@ export default component$(() => {
         <div class="flex items-center gap-2">
           <span>Powered by</span>
           <a 
-            href="https://qwik.builder.io" 
+            href="https://github.com/afoim/Qwik-cursor-blog" 
             target="_blank" 
             rel="noopener noreferrer"
             class="hover:text-white/70 transition-colors duration-300"
